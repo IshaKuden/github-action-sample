@@ -6,6 +6,12 @@ namespace github_action_sample_tests
         public void Test1()
         {
 
+        }      
+
+        [Fact]
+        public void Test2()
+        {
+            throw new NotImplementedException();
         }
     }
 }
