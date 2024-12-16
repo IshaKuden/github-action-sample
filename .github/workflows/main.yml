@@ -1,4 +1,7 @@
-name: .NET CI/CD Pipeline
+name: CI/CD Pipeline
+
+dispatch:
+  workflow_dispatch:
 
 on:
   push:
@@ -7,6 +10,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -40,13 +44,14 @@ jobs:
 
     - name: Run SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@v2
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
+        projectBaseDir: .
         args: >
           -Dsonar.organization=myorganization
           -Dsonar.projectKey=myproject
           -Dsonar.host.url=https://sonarcloud.io
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     - name: Run Trivy Security Scan
       uses: aquasecurity/trivy-action@v0.10.1
