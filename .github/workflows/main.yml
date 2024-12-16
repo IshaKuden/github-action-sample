@@ -20,16 +20,16 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '8.0.x'
 
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build --no-restore --configuration Debug
 
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity detailed ./github-action-sample-tests/github-action-sample-tests.csproj
 
   code_analysis:
     runs-on: ubuntu-latest
@@ -42,6 +42,7 @@ jobs:
     - name: Run SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@v2
       with:
+        projectBaseDir: .
         args: >
           -Dsonar.organization=myorganization
           -Dsonar.projectKey=myproject
@@ -50,7 +51,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     - name: Run Trivy Security Scan
-      uses: aquasecurity/trivy-action@master
+      uses: aquasecurity/trivy-action@v0.10.1
       with:
         scan-type: 'fs'
         input: '.'
