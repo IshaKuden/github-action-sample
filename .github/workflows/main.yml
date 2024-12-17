@@ -42,9 +42,8 @@ jobs:
         projectBaseDir: .
         args: >
           -Dsonar.organization=ishakuden
-          -Dsonar.projectKey=sample-project-token
+          -Dsonar.projectKey=IshaKuden_github-action-sample
           -Dsonar.host.url=https://sonarcloud.io
-          -X
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
