@@ -22,13 +22,21 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    - name: Cache .NET dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
-  code_analysis:
+  sonar_analysis:
     runs-on: ubuntu-latest
     needs: build
 
@@ -47,6 +55,14 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+  trivy_analysis:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Run Trivy Security Scan
       uses: aquasecurity/trivy-action@0.28.0
       with:
@@ -55,7 +71,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: code_analysis
+    needs: [sonar_analysis, trivy_analysis]
 
     steps:
     - name: Checkout code
