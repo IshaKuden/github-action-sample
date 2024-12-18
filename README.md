@@ -1,4 +1,4 @@
-# github-action-sample GitHub Actions CI/CD Pipeline: Project Overview
+# GitHub Actions CI/CD Pipeline: Project Overview
 
 This document provides a detailed explanation of the GitHub Actions workflow implemented in this project. The workflow automates the CI/CD (Continuous Integration and Continuous Deployment) process, ensuring efficient builds, testing, code analysis, and deployment.
 
@@ -104,6 +104,12 @@ This job contains two parallel steps:
    - **projectBaseDir**: Specifies the project’s root directory.
    - **args**: Passes configuration parameters to the scanner, such as organization and project keys.
    - **SONAR_TOKEN**: Retrieves a secure authentication token from GitHub Secrets.
+
+   **SonarCloud Analysis Completed Successfully**
+
+   The screenshot below shows the result of the SonarCloud analysis performed for this project. This analysis was successfully completed to ensure code quality and security.
+
+   ![SonarQube Analysis Result](https://github.com/IshaKuden/github-action-sample/blob/master/github-action-sample/sonar.PNG)
 
 2. **Trivy Security Scan**:
    ```yaml
