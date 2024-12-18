@@ -5,7 +5,6 @@ namespace github_action_sample_tests
         [Fact]
         public void Test1()
         {
-
         }      
 
         [Fact]
